@@ -4,17 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.roomdb_simple.model.User
+import com.example.roomdb_simple.model.Plan
 
-@Database(entities = [User::class], version = 1, exportSchema = false)
-abstract class UserDatabase : RoomDatabase() {
-    abstract fun userDao(): UserDao
+@Database(entities = [Plan::class], version = 1, exportSchema = false)
+abstract class PlanDatabase : RoomDatabase() {
+    abstract fun planDao(): PlanDao
 
     companion object{
         @Volatile
-        private var INSTANCE: UserDatabase? = null
+        private var INSTANCE: PlanDatabase? = null
 
-        fun getDatabase(context: Context): UserDatabase{
+        fun getDatabase(context: Context): PlanDatabase{
             val tmpInstance = INSTANCE
             if(tmpInstance != null){
                 return tmpInstance
@@ -22,8 +22,8 @@ abstract class UserDatabase : RoomDatabase() {
             kotlin.synchronized(this){
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    UserDatabase::class.java,
-                    "user_database"
+                    PlanDatabase::class.java,
+                    "plan_database"
                 ).build()
                 INSTANCE = instance
                 return instance

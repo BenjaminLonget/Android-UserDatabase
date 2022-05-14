@@ -8,43 +8,43 @@
     tools:context=".fragments.add.AddFragment">
 
     <EditText
-        android:id="@+id/addFirstName_et"
+        android:id="@+id/addExercise_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="First Name"
+        android:hint="Exercise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/addLastName_et"
+        android:id="@+id/addSets_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Last Name"
+        android:inputType="number"
+        android:hint="Sets"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addFirstName_et" />
+        app:layout_constraintTop_toBottomOf="@+id/addExercise_et" />
 
     <EditText
-        android:id="@+id/addAge_et"
+        android:id="@+id/addReps_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Age"
+        android:inputType="number"
+        android:hint="Reps"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addLastName_et" />
+        app:layout_constraintTop_toBottomOf="@+id/addSets_et" />
 
     <Button
         android:id="@+id/add_button"
@@ -56,6 +56,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addAge_et" />
+        app:layout_constraintTop_toBottomOf="@+id/addReps_et" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

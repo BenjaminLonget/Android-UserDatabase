@@ -10,13 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roomdb_simple.R
-import com.example.roomdb_simple.viewmodel.UserViewModel
+import com.example.roomdb_simple.viewmodel.PlanViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 
 class ListFragment : Fragment() {
 
-    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var mplanViewModel: PlanViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,9 +28,9 @@ class ListFragment : Fragment() {
         val recyclerView = view.recyclerview
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer { user ->
-            adapter.setData(user)
+        mplanViewModel = ViewModelProvider(this).get(PlanViewModel::class.java)
+        mplanViewModel.readAllData.observe(viewLifecycleOwner, Observer { plan ->
+            adapter.setData(plan)
         })
 
         view.floatingActionButton.setOnClickListener{
@@ -58,7 +58,7 @@ class ListFragment : Fragment() {
     private fun deleteAll(){
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes") {_, _ ->
-            mUserViewModel.deleteAll()
+            mplanViewModel.deleteAll()
             Toast.makeText(requireContext(), "Deleted all entries", Toast.LENGTH_LONG).show()
         }
         builder.setNegativeButton("No") {_, _ -> }

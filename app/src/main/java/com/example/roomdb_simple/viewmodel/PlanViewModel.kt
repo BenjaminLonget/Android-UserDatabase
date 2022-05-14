@@ -4,37 +4,37 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.roomdb_simple.databasepackage.UserDatabase
-import com.example.roomdb_simple.repository.UserRepo
-import com.example.roomdb_simple.model.User
+import com.example.roomdb_simple.databasepackage.PlanDatabase
+import com.example.roomdb_simple.repository.PlanRepo
+import com.example.roomdb_simple.model.Plan
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class UserViewModel(application: Application): AndroidViewModel(application) {
-    val readAllData: LiveData<List<User>>
-    private val repository: UserRepo
+class PlanViewModel(application: Application): AndroidViewModel(application) {
+    val readAllData: LiveData<List<Plan>>
+    private val repository: PlanRepo
 
     init {
-        val userDao = UserDatabase.getDatabase(application).userDao()
-        repository = UserRepo(userDao)
+        val planDao = PlanDatabase.getDatabase(application).planDao()
+        repository = PlanRepo(planDao)
         readAllData = repository.readAllData
     }
 
     //dispatchers.IO betyder at det kører i en baggrunds thread
-    fun addUser(user: User){
+    fun addPlan(plan: Plan){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addUser(user)
+            repository.addPlan(plan)
         }
     }
-    fun updateUser(user: User){
+    fun updatePlan(plan: Plan){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateUser(user)
+            repository.updatePlan(plan)
         }
     }
 
-    fun deleteEntry(user: User){
+    fun deleteEntry(plan: Plan){
         viewModelScope.launch(Dispatchers.IO){
-            repository.deleteEntry(user)
+            repository.deleteEntry(plan)
         }
     }
 

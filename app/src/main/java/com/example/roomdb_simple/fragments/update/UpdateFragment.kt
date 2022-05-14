@@ -11,16 +11,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.roomdb_simple.R
-import com.example.roomdb_simple.model.User
-import com.example.roomdb_simple.viewmodel.UserViewModel
+import com.example.roomdb_simple.model.Plan
+import com.example.roomdb_simple.viewmodel.PlanViewModel
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
 
 
 class UpdateFragment : Fragment() {
     private val args by navArgs<UpdateFragmentArgs>()
-    //args indeholder current user (den der vælges på listen)
-    private lateinit var mViewModel: UserViewModel
+    //args indeholder current plan (den der vælges på listen)
+    private lateinit var mViewModel: PlanViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,10 +28,10 @@ class UpdateFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_update, container, false)
-        mViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        view.updateFirstName_et.setText(args.currentUser.firstName)
-        view.updateLastName_et.setText(args.currentUser.lastName)
-        view.updateAge_et.setText(args.currentUser.age.toString())
+        mViewModel = ViewModelProvider(this).get(PlanViewModel::class.java)
+        view.updateExercise_et.setText(args.currentPlan.exercise)
+        view.updateSets_et.setText(args.currentPlan.sets.toString())
+        view.updateReps_et.setText(args.currentPlan.reps.toString())
         view.update_button.setOnClickListener{
             update()
         }
@@ -40,13 +40,13 @@ class UpdateFragment : Fragment() {
         return view
     }
     private fun update(){
-        val firstName = updateFirstName_et.text.toString()
-        val lastName = updateLastName_et.text.toString()
-        val age = Integer.parseInt(updateAge_et.text.toString())
+        val exercise = updateExercise_et.text.toString()
+        val sets = Integer.parseInt(updateSets_et.text.toString())
+        val reps = Integer.parseInt(updateReps_et.text.toString())
 
-        if(inputChck(firstName, lastName, updateAge_et.text)){
-            val updatedUser = User(args.currentUser.id, firstName, lastName, age)
-            mViewModel.updateUser(updatedUser)
+        if(inputChck(exercise, updateSets_et.text, updateReps_et.text)){
+            val updatedPlan = Plan(args.currentPlan.id, exercise, sets, reps)
+            mViewModel.updatePlan(updatedPlan)
             Toast.makeText(requireContext(), "Updated set", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
@@ -55,8 +55,8 @@ class UpdateFragment : Fragment() {
         }
     }
 
-    private fun inputChck(firstName: String, lastName: String, age: Editable): Boolean{
-        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty((lastName)) && age.isEmpty())
+    private fun inputChck(exercise: String, sets: Editable, reps: Editable): Boolean{
+        return !(TextUtils.isEmpty(exercise) && sets.isEmpty() && reps.isEmpty())
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -65,15 +65,15 @@ class UpdateFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.menu_delete){
-            deleteUser()
+            deleteplan()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun deleteUser() {
+    private fun deleteplan() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes"){_,_ ->
-            mViewModel.deleteEntry(args.currentUser)
+            mViewModel.deleteEntry(args.currentPlan)
             Toast.makeText(requireContext(), "Deleted entry", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }

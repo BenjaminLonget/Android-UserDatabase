@@ -11,14 +11,14 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.roomdb_simple.R
-import com.example.roomdb_simple.model.User
-import com.example.roomdb_simple.viewmodel.UserViewModel
+import com.example.roomdb_simple.model.Plan
+import com.example.roomdb_simple.viewmodel.PlanViewModel
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
 
 class AddFragment : Fragment() {
 
-    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var mplanViewModel: PlanViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +26,7 @@ class AddFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add, container, false)
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        mplanViewModel = ViewModelProvider(this).get(PlanViewModel::class.java)
 
         view.add_button.setOnClickListener{
             insertDataToDatabase()
@@ -35,22 +35,22 @@ class AddFragment : Fragment() {
     }
 
     private fun insertDataToDatabase(){
-        val firstName = addFirstName_et.text.toString()
-        val lastName = addLastName_et.text.toString()
-        val age = addAge_et.text
+        val exercise = addExercise_et.text.toString()
+        val sets = addSets_et.text
+        val reps = addReps_et.text
 
-        if(inputCheck(firstName, lastName, age)){
-            val user = User(0, firstName, lastName, Integer.parseInt(age.toString()))
-            mUserViewModel.addUser((user))
+        if(inputCheck(exercise, sets, reps)){
+            val plan = Plan(0, exercise, Integer.parseInt(sets.toString()), Integer.parseInt(reps.toString()))
+            mplanViewModel.addPlan((plan))
             Toast.makeText(requireContext(), "Data added", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
         }
         else{
-            Toast.makeText(requireContext(), "Please write in all the fields!", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Please fill out all the fields!", Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun inputCheck(firstName: String, lastName: String, age: Editable): Boolean{
-        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty((lastName)) && age.isEmpty())
+    private fun inputCheck(exercise: String, sets: Editable, reps: Editable): Boolean{
+        return !(TextUtils.isEmpty(exercise) && sets.isEmpty() && reps.isEmpty())
     }
 }
